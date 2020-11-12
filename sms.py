@@ -3,6 +3,8 @@ from twilio.rest import Client
 from dotenv import load_dotenv
 import logging
 
+logging.basicConfig(format="%(levelname)s %(asctime)s %(message)s", level=logging.INFO)
+
 
 def send_sms(message):
     load_dotenv()
