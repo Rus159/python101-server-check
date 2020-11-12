@@ -7,7 +7,7 @@ from requests.exceptions import HTTPError
 def server_check(prev_status, current_status):
     prev_status = current_status
     try:
-        response = requests.get('http://sza.digital')
+        response = requests.get('https://python101.online')
         response.raise_for_status()
     except HTTPError:
         current_status = False
@@ -30,4 +30,4 @@ if __name__ == "__main__":
     current_status = True
     while True:
         prev_status, current_status = map(bool, server_check(prev_status, current_status))
-        sleep(30)
+        sleep(60)
