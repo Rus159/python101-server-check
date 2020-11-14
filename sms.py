@@ -12,10 +12,9 @@ def send_sms(message):
     TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
     PHONE_NUMBER_FROM = os.getenv('PHONE_NUMBER_FROM')
     PHONE_NUMBER_TO = os.getenv('PHONE_NUMBER_TO')
-
+    client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+    client.http_client.logger.setLevel(logging.CRITICAL)
     try:
-        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
-
         message = client.messages.create(
             body=message,
             from_=PHONE_NUMBER_FROM,
