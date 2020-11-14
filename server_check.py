@@ -10,7 +10,8 @@ def server_check(prev_status, current_status):
         response = requests.get('https://python101.online')
         response.raise_for_status()
     except HTTPError:
-        current_status = False
+        current_status = True
+        http_error = True
     except Exception:
         current_status = False
     else:
@@ -20,14 +21,18 @@ def server_check(prev_status, current_status):
         message = 'python101 оффлайн'
         sms.send_sms(message)
     if not prev_status and current_status:
-        message = 'python101 онлайн'
+        if http_error:
+            message = 'python101 онлайн, но выдает ошибку ' + str(response.status_code)
+        else:
+            message = 'python101 онлайн'
         sms.send_sms(message)
+    http_error = False
     return [prev_status, current_status]
 
 
 if __name__ == "__main__":
-    prev_status = True
-    current_status = True
+    prev_status = False
+    current_status = False
     while True:
         prev_status, current_status = map(bool, server_check(prev_status, current_status))
         sleep(60)
